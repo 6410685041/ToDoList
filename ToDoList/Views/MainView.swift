@@ -20,7 +20,7 @@ struct MainView: View {
     
     var accountView: some View {
         TabView {
-            ToDoListView()
+            ToDoListView(userId: viewModel.currentUserId)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

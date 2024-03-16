@@ -12,8 +12,10 @@ import FirebaseFirestore
 class NewItemViewModel: ObservableObject {
     @Published var title = ""
     @Published var dueDate = Date()
+    @Published var showAlert = false
     
     func save() {
+        guard canSave else { return }
         guard let uId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -33,5 +35,17 @@ class NewItemViewModel: ObservableObject {
             .collection("todos")
             .document(newId)
             .setData(newItem.asDictionary())
+    }
+    
+    var canSave: Bool {
+        guard !title.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return false
+        }
+        
+        guard dueDate >= Date().addingTimeInterval(-86400) else { // time is second
+            return false
+        }
+        
+        return true
     }
 }
