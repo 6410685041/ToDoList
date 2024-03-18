@@ -13,6 +13,6 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     
     func login() {
-        Auth.auth().signIn(withEmail: email, link: password)
+        Auth.auth().signIn(withEmail: email, password: password)
     }
 }
